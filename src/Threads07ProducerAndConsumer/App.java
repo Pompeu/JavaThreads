@@ -5,61 +5,83 @@ import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
 public class App {
+	//A queue that takes things from Thread and provide the same to other threads
 	private static BlockingQueue<Integer> queue = new ArrayBlockingQueue<>(10);
+	
+	static int a[]={10,20,30,40,70,80,90,100,50};
 
 	public static void main(String[] args) throws InterruptedException {
+		
 		Thread t1 = new Thread(new Runnable() {
 
 			@Override
 			public void run() {
 				try {
-					producer();
+					producer(Thread.currentThread());
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 
 			}
-		});
+		},"thread 1");
 		Thread t2 = new Thread(new Runnable() {
 
 			@Override
 			public void run() {
+				boolean test=true;
 				try {
-					consumer();
+					while(test)
+					{
+					if(queue.size()>1)
+					{
+						System.out.println("elements is queue"+queue.size());
+					consumer(Thread.currentThread());
+					test=false;
+					}
+					else{
+						System.out.println("no items in queue sleeping "+Thread.currentThread().getName());
+						Thread.sleep(1000);
+					}
+					}
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 
 			}
-		});
-		t1.start();
-		t2.start();
+		},"thread 2");
 		
 		
+			t1.start();
+			t2.start();
 			t1.join();
 			t2.join();
 		
 		
 	}
 
-	private static void producer() throws InterruptedException {
-		Random random = new Random();
-		while (true) {
-			queue.put(random.nextInt(100));
+	//inserting records to the queue
+	private static void producer(Thread thread) throws InterruptedException {
+		System.out.println("Producer thread is="+thread.getName());
+		for(int i=0;i<=5;i++)
+		{
+			System.out.println("putting in queue "+ a[i]);
+			queue.put(a[i]);
+	
 		}
+		System.out.println("existing from producer function");
 	}
-
-	private static void consumer() throws InterruptedException {
-		Random random = new Random();
-		while (true) {
-			Thread.sleep(100);
-			if (random.nextInt(80) == 0) {
+	
+	
+	//getting records from the queue until it is not empty
+	private static void consumer(Thread thread) throws InterruptedException {
+		System.out.println("Consumer thread is="+thread.getName());
+		while(!queue.isEmpty()){
 				Integer value = queue.take();
-				System.out.println("Pegar Valor : "+ value + " "
-						+ "Tamanho da fila é " + queue.size());
+				System.out.println("Value is : "+ value + " "
+						+ "Queue size is" + queue.size());
 			}
 		}
 	}
-}
+
