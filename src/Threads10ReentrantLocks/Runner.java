@@ -12,7 +12,8 @@ public class Runner {
 	private Scanner s;
 
 	private void increment() {
-		for (int i = 0; i < 100000; i++) {
+		System.out.println("increasing count");
+		for (int i = 0; i < 10; i++) {
 			count++;
 		}
 	}

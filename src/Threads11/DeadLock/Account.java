@@ -15,6 +15,7 @@ public class Account {
 	}
 	
 	public static void transfer(Account acc1 , Account acc2,  int amount){
+		System.out.println("Transfering Amount "+amount);
 		acc1.withdraw(amount);
 		acc2.doposit(amount);
 	}

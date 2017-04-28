@@ -31,7 +31,7 @@ class Processor implements Runnable {
 public class App {
 
 	public static void main(String[] args) {
-		ExecutorService executor = Executors.newFixedThreadPool(2);
+		ExecutorService executor = Executors.newFixedThreadPool(3);
 		
 		for (int i = 0; i < 5; i++) {
 			executor.submit(new Processor(i));
