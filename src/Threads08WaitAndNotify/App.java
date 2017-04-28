@@ -17,7 +17,7 @@ public class App {
 				}
 
 			}
-		});
+		},"Thread 1");
 		Thread t2 = new Thread(new Runnable() {
 
 			@Override
@@ -30,7 +30,7 @@ public class App {
 				}
 
 			}
-		});
+		},"Thread 2");
 		t1.start();
 		t2.start();
 		
