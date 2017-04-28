@@ -10,28 +10,28 @@ public class App {
 			@Override
 			public void run() {
 				try {
-					runner.firstThread();
+					runner.firstThread(Thread.currentThread());
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 
 			}
-		});
+		},"First Thread");
 
 		Thread t2 = new Thread(new Runnable() {
 
 			@Override
 			public void run() {
 				try {
-					runner.secondThread();;
+					runner.secondThread(Thread.currentThread());;
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 
 			}
-		});
+		},"Second Thread");
 		
 		t1.start();
 		t2.start();

@@ -11,7 +11,7 @@ public class Runner {
 	private Lock lock1 = new ReentrantLock();
 	private Lock lock2 = new ReentrantLock();
 
-	private void acquiereLock(Lock fistLock, Lock seconlock)
+	private void acquiereLock(Lock fistLock, Lock seconlock,Thread thread)
 			throws InterruptedException {
 		boolean gotFirstLock = false;
 		boolean gotSecondLock = false;
@@ -21,12 +21,15 @@ public class Runner {
 				gotSecondLock = seconlock.tryLock();
 			} finally {
 				if (gotFirstLock && gotSecondLock) {
+					System.out.println("both locks true for "+thread.getName());
 					return;
 				}
 				if (gotFirstLock) {
+					System.out.println("only first lock true for "+thread.getName()+" releasing lock");
 					fistLock.unlock();
 				}
 				if (gotSecondLock) {
+					System.out.println("only second lock true for "+thread.getName()+" releasing lock");
 					seconlock.unlock();
 				}
 			}
@@ -35,31 +38,37 @@ public class Runner {
 		}
 	}
 
-	public void firstThread() throws InterruptedException {
+	public void firstThread(Thread thread) throws InterruptedException {
 		Random random = new Random();
 
-		for (int i = 0; i < 10000; i++) {
+		for (int i = 0; i < 10; i++) {
 
-			acquiereLock(lock1, lock2);
+			System.out.println(thread.getName()+"acquiring locks");
+			acquiereLock(lock1, lock2,thread);
 
 			try {
+				System.out.println(thread.getName()+" transfering amount");
 				Account.transfer(acc1, acc2, random.nextInt(100));
 			} finally {
+				System.out.println(thread.getName()+" releasing both locks");
 				lock1.unlock();
 				lock2.unlock();
 			}
 		}
 	}
 
-	public void secondThread() throws InterruptedException {
+	public void secondThread(Thread thread) throws InterruptedException {
 		Random random = new Random();
-		for (int i = 0; i < 10000; i++) {
-			acquiereLock(lock2, lock1);
+		for (int i = 0; i < 10; i++) {
+			System.out.println(thread.getName()+" acquiring locks");
+			acquiereLock(lock2, lock1,thread);
 
 			try {
+				System.out.println(thread.getName()+" transfering amount");
 				Account.transfer(acc2, acc1, random.nextInt(100));
 			} finally {
-				lock1.unlock();
+				System.out.println(thread.getName()+" releasing both locks");
+				lock1.unlock(); 
 				lock2.unlock();
 			}
 		}
