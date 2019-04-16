@@ -28,6 +28,7 @@ public class JoinThreadDemo extends Thread {
 		j2.start();
 		System.out.println("Joining");
 		try{
+			//join
 			j1.join();
 			}catch(InterruptedException ex)
 		{
