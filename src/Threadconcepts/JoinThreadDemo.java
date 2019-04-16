@@ -32,7 +32,7 @@ public class JoinThreadDemo extends Thread {
 			}catch(InterruptedException ex)
 		{
 			// should not happen:
-			System.out.println("no interrupt to sleep");
+			 System.out.println("no interrupt to sleep");
 		} 
 		System.out.println("Main Finished.");
 	}
