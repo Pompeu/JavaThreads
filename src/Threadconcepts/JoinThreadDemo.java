@@ -16,7 +16,7 @@ public class JoinThreadDemo extends Thread {
 		} catch (Exception ex) {
 			System.err.println(ex);
 		}
-		System.out.println("Thread Finished.");
+		System.out.println("Thread Finished");
 	}
 	
 	public static void main(String[] args)
