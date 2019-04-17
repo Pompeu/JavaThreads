@@ -4,7 +4,7 @@ public class JoinThreadDemo extends Thread {
   
 	public JoinThreadDemo(String name)
 	{
-		this.setName(name);
+		this.setName( name);
 	}
 	public void run()
 	{
