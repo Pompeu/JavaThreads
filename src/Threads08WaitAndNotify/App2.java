@@ -1,10 +1,10 @@
-package Threads07ProducerAndConsumer;
+package Threads08WaitAndNotify;
 
 import java.util.Random;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
-public class App {
+public class App2 {
 	//A queue that takes things from Thread and provide the same to other threads
 	private static BlockingQueue<Integer> queue = new ArrayBlockingQueue<>(10);
 	
